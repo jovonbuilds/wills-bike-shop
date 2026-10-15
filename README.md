@@ -35,28 +35,9 @@
 
 1. Download **`WillsBikeShop-<version>.dmg`** from the [latest release](https://github.com/jovonbuilds/wills-bike-shop/releases/latest).
 2. Open it and drag **Will's Bike Shop** onto **Applications**.
-3. Open the app from Applications. The first launch needs one extra step (below).
+3. Open **Will's Bike Shop** from Applications. When it first looks for your bike, macOS asks for **Bluetooth** access; click **Allow**.
 
-### First launch: "Apple could not verify…"
-
-Will's Bike Shop is free and open source, and it isn't notarized by Apple, so macOS blocks it the first time. To allow it, once:
-
-1. Open the app. When macOS says it can't verify it, click **Done**.
-2. Open **System Settings → Privacy & Security** and scroll down to **Security**.
-3. Next to *"Will's Bike Shop" was blocked*, click **Open Anyway**, then confirm with your password or Touch ID.
-
-<details>
-<summary>Prefer Terminal? One command does the same thing</summary>
-
-```sh
-xattr -dr com.apple.quarantine "/Applications/Will's Bike Shop.app"
-```
-
-</details>
-
-After that it opens like any other app. When it first looks for your bike, macOS asks for **Bluetooth** access; click **Allow**.
-
-Check your download against `SHA256SUMS.txt` from the release if you like: `shasum -a 256 WillsBikeShop-*.dmg`.
+The app is signed with a Developer ID and notarized by Apple, so it opens like any other Mac app. You can also check your download against `SHA256SUMS.txt` from the release: `shasum -a 256 WillsBikeShop-*.dmg`.
 
 ## Compatible bikes
 
@@ -147,6 +128,8 @@ Run the tests, or build the downloadable `.dmg` and `.zip` yourself:
 swift test --package-path BikeKit   # protocol tests
 ./scripts/build-release.sh          # universal build into dist/
 ```
+
+`build-release.sh` signs and notarizes automatically when your keychain has a Developer ID Application certificate and a `notarytool` profile named `wills-bike-shop`; otherwise it makes a locally signed build. Details are at the top of the script.
 
 To try the interface without a bike, run with the `-demo YES` launch argument (Xcode: Product → Scheme → Edit Scheme → Arguments).
 
